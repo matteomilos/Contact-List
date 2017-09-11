@@ -50,9 +50,11 @@ namespace ContactsHRC.Controllers
                 return BadRequest();
             }
 
+            updatePhoneNumbers(contact);
 
+            updateEmailAddresses(contact);
 
-            db.Entry(contact).State = EntityState.Modified;
+            //db.Entry(contact).State = EntityState.Modified;
 
             try
             {
@@ -71,6 +73,72 @@ namespace ContactsHRC.Controllers
             }
 
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        private void updatePhoneNumbers(Contact contact)
+        {
+            var originalContact = db.Contacts.Where(c => c.ContactId == contact.ContactId).Include(c => c.PhoneNumbers).SingleOrDefault();
+
+            var contactEntry = db.Entry(originalContact);
+            contactEntry.CurrentValues.SetValues(contact);
+
+            foreach (var number in contact.PhoneNumbers)
+            {
+                var originalNumber = originalContact.PhoneNumbers.Where(n => n.PhoneNumberId == number.PhoneNumberId && n.PhoneNumberId != 0).SingleOrDefault();
+
+
+                if (originalNumber != null)
+                {
+                    var numberEntry = db.Entry(originalNumber);
+                    numberEntry.CurrentValues.SetValues(number);
+                }
+                else
+                {
+                    number.PhoneNumberId = 0;
+                    originalContact.PhoneNumbers.Add(number);
+                }
+            }
+
+            foreach (var originalNumber in originalContact.PhoneNumbers.Where(n => n.PhoneNumberId != 0).ToList())
+            {
+                if (!contact.PhoneNumbers.Any(n => n.PhoneNumberId == originalNumber.PhoneNumberId))
+                {
+                    db.PhoneNumbers.Remove(originalNumber);
+                }
+            }
+        }
+
+        private void updateEmailAddresses(Contact contact)
+        {
+            var originalContact = db.Contacts.Where(c => c.ContactId == contact.ContactId).Include(c => c.EmailAddresses).SingleOrDefault();
+
+            var contactEntry = db.Entry(originalContact);
+            contactEntry.CurrentValues.SetValues(contact);
+
+            foreach (var number in contact.EmailAddresses)
+            {
+                var originalNumber = originalContact.EmailAddresses.Where(n => n.EmailAddressId == number.EmailAddressId && n.EmailAddressId != 0).SingleOrDefault();
+
+
+                if (originalNumber != null)
+                {
+                    var numberEntry = db.Entry(originalNumber);
+                    numberEntry.CurrentValues.SetValues(number);
+                }
+                else
+                {
+                    number.EmailAddressId = 0;
+                    originalContact.EmailAddresses.Add(number);
+                }
+            }
+
+            foreach (var originalNumber in originalContact.EmailAddresses.Where(n => n.EmailAddressId != 0).ToList())
+            {
+                if (!contact.EmailAddresses.Any(n => n.EmailAddressId == originalNumber.EmailAddressId))
+                {
+                    db.EmailAddresses.Remove(originalNumber);
+                }
+            }
         }
 
         // POST: api/Contacts
