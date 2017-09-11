@@ -50,6 +50,8 @@ namespace ContactsHRC.Controllers
                 return BadRequest();
             }
 
+
+
             db.Entry(contact).State = EntityState.Modified;
 
             try

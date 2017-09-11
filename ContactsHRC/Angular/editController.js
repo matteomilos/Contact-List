@@ -10,7 +10,7 @@
             });
 
 
-            $scope.save = function(){
+            $scope.save = function () {
                 var Contact = {
                     ContactId: contactId,
                     FirstName: $scope.currentContact.FirstName,
@@ -24,5 +24,24 @@
                 $http.put(apiUrl, Contact).then($location.path("#/list"));
 
             }
+
+            $scope.deleteNumber = function (index) {
+                $scope.currentContact.PhoneNumbers.splice(index, 1);
+            }
+
+            $scope.deleteEmail = function (index) {
+                $scope.currentContact.EmailAddresses.splice(index, 1);
+            }
+
+            $scope.addPhoneNumber = function () {
+                var newPhone = { PhoneNumberId: '', PhoneNumberValue: '', ContactId: $scope.currentContact.ContactId };
+                $scope.currentContact.PhoneNumbers.push(newPhone);
+            }
+
+            $scope.addEmailAddress = function () {
+                var newEmail = { EmailAddressId: '', EmailAddressValue: '', ContactId: $scope.currentContact.ContactId };
+                $scope.currentContact.EmailAddresses.push(newEmail);
+            }
+        
         });
 })();
