@@ -1,6 +1,4 @@
-# README #
-
-Zbog problema s bazom podataka kreirao sam novi repozitorij s jednakim sadr≈æajem kao i stari
+# Zbog problema s bazom podataka kreirao sam novi repozitorij s jednakim sadrûajem kao i stari #
 
 ### What is this repository for? ###
 
