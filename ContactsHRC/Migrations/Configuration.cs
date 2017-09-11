@@ -30,70 +30,62 @@ namespace ContactsHRC.Migrations
             //
 
             List<EmailAddress> emails1 = new List<EmailAddress>()
-                    {
-                        new EmailAddress
-                        {
-                            EmailAddressValue = "email1@gmail.com"
-                        },
-                        new EmailAddress
-                        {
-                            EmailAddressValue = "email2@yahoo.com"
-                        }
-                    };
+            {
+                new EmailAddress{EmailAddressValue = "email1@gmail.com"},
+                new EmailAddress{EmailAddressValue = "email2@yahoo.com"}
+            };
 
             List<EmailAddress> emails2 = new List<EmailAddress>()
-                    {
-                        new EmailAddress
-                        {
-                            EmailAddressValue = "mail4@net.hr"
-                        },
-                        new EmailAddress
-                        {
-                            EmailAddressValue = "1mail1@outlook.com"
-                        }
-                    };
+            {
+                new EmailAddress{EmailAddressValue = "mail4@net.hr"},
+                new EmailAddress{EmailAddressValue = "1mail1@outlook.com"}
+            };
+
+            List<PhoneNumber> numbers1 = new List<PhoneNumber>()
+            {
+                new PhoneNumber{PhoneNumberValue = "098251236"},
+                new PhoneNumber{PhoneNumberValue = "013578965"}
+            };
+
+            List<PhoneNumber> numbers2 = new List<PhoneNumber>()
+            {
+                new PhoneNumber{PhoneNumberValue = "098325687"},
+                new PhoneNumber{PhoneNumberValue = "021258412"}
+            };
+
+            List<Tag> tags1 = new List<Tag>()
+            {
+                new Tag{TagName = "mislav"},
+                new Tag{TagName = "mlad"},
+                new Tag{TagName = "pametan"}
+            };
+
+            List<Tag> tags2 = new List<Tag>()
+            {
+                new Tag{TagName = "ivan"},
+                new Tag{TagName = "star"},
+                new Tag{TagName = "zanimljiv"}
+            };
 
             context.Contacts.AddOrUpdate(c => c.ContactId,
                 new Contact
                 {
-                    FirstName = "Matteo",
-                    LastName = "Miloš",
+                    FirstName = "Mislav",
+                    LastName = "Mariæ",
                     Address = "Zagrebaèka 23, Zagreb",
-
-                    EmailAddresses =emails1,
-
-                    PhoneNumbers = new List<PhoneNumber>()
-                    {
-                        new PhoneNumber
-                        {
-                            PhoneNumberValue = "098251236"
-                        },
-                        new PhoneNumber
-                        {
-                            PhoneNumberValue = "013578965"
-                        }
-                    }
+                    EmailAddresses = emails1,
+                    PhoneNumbers = numbers1,
+                    Tags = tags1
                 },
 
                 new Contact
                 {
                     FirstName = "Ivan",
                     LastName = "Horvat",
-                                        Address = "Splitska 23, Split",
-
+                    Address = "Splitska 23, Split",
                     EmailAddresses = emails2,
-
-                    PhoneNumbers = new List<PhoneNumber>()
-                    {
-                        new PhoneNumber
-                        {
-                            PhoneNumberValue = "098325687"
-                        },
-                        new PhoneNumber
-                        {
-                            PhoneNumberValue = "021258412"
-                        }
-                    }
+                    PhoneNumbers = numbers2,
+                    Tags = tags2
                 }
                 );
         }

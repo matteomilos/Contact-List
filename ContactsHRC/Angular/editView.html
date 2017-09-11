@@ -19,6 +19,13 @@
                 <div><a ng-click="addEmailAddress()" class="btn btn-primary">+</a></div>
 
             </p>
+            <p>
+                Tags: <div ng-repeat="(key, tag) in currentContact.Tags">
+                    <input class="form-control" type="text" ng-model="tag.TagName"> <a ng-click="deleteTag(key)" class="btn btn-danger">X</a>
+                </div>
+                <div><a ng-click="addTag()" class="btn btn-primary">+</a></div>
+
+            </p>
         </div>
 
 

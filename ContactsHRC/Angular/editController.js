@@ -34,17 +34,22 @@
             }
 
             $scope.addPhoneNumber = function () {
-                var newPhone = {  PhoneNumberValue: '', ContactId: $scope.currentContact.ContactId };
+                var newPhone = {PhoneNumberId: '0',  PhoneNumberValue: '', ContactId: $scope.currentContact.ContactId };
                 $scope.currentContact.PhoneNumbers.push(newPhone);
             }
 
             $scope.addEmailAddress = function () {
-                var newEmail = { EmailAddressValue: '', ContactId: $scope.currentContact.ContactId };
+                var newEmail = {EmailAddresId: '0', EmailAddressValue: '', ContactId: $scope.currentContact.ContactId };
                 $scope.currentContact.EmailAddresses.push(newEmail);
             }
 
             $scope.addTag = function () {
-                $scope.currentContact.Tags.push("");
+                var newTag = {TagId: '0', TagName: ''}
+                $scope.currentContact.Tags.push(newTag);
+            }
+
+            $scope.deleteTag = function (index) {
+                $scope.currentContact.Tags.splice(index, 1);
             }
         
         });

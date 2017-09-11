@@ -54,6 +54,7 @@ namespace ContactsHRC.Controllers
 
             updateEmailAddresses(contact);
 
+            updateTags(contact);
             //db.Entry(contact).State = EntityState.Modified;
 
             try
@@ -137,6 +138,39 @@ namespace ContactsHRC.Controllers
                 if (!contact.EmailAddresses.Any(n => n.EmailAddressId == originalNumber.EmailAddressId))
                 {
                     db.EmailAddresses.Remove(originalNumber);
+                }
+            }
+        }
+
+        private void updateTags(Contact contact)
+        {
+            var originalContact = db.Contacts.Where(c => c.ContactId == contact.ContactId).Include(c => c.Tags).SingleOrDefault();
+
+            var contactEntry = db.Entry(originalContact);
+            contactEntry.CurrentValues.SetValues(contact);
+
+            foreach (var number in contact.Tags)
+            {
+                var originalNumber = originalContact.Tags.Where(n => n.TagId == number.TagId && n.TagId != 0).SingleOrDefault();
+
+
+                if (originalNumber != null)
+                {
+                    var numberEntry = db.Entry(originalNumber);
+                    numberEntry.CurrentValues.SetValues(number);
+                }
+                else
+                {
+                    number.TagId = 0;
+                    originalContact.Tags.Add(number);
+                }
+            }
+
+            foreach (var originalNumber in originalContact.Tags.Where(n => n.TagId != 0).ToList())
+            {
+                if (!contact.Tags.Any(n => n.TagId == originalNumber.TagId))
+                {
+                    db.Tags.Remove(originalNumber);
                 }
             }
         }
