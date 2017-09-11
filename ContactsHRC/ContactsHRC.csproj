@@ -174,15 +174,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Angular\editController.js" />
+    <Content Include="Angular\editView.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\Angular\contactApp.js" />
-    <Content Include="Scripts\Angular\contactList.html" />
-    <Content Include="Scripts\Angular\listController.js" />
+    <Content Include="Angular\contactApp.js" />
+    <Content Include="Angular\contactList.html" />
+    <Content Include="Angular\listController.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">

@@ -1,0 +1,25 @@
+﻿<div ng-controller="editController">
+    <div class="list-group-item">
+
+        <div class="form-group">
+
+            <p>First name: <input id="firstName" class="form-control" type="text" ng-model="currentContact.FirstName"> </p>
+            <p>Last name: <input id="lastName" class="form-control" type="text" ng-model="currentContact.LastName"> </p>
+        </div>
+
+
+
+        <a ng-click="save()">
+            <button class="btn btn-default">
+                <span class="glyphicon glyphicon-ok"></span>
+                <span> Save Edits</span>
+            </button>
+        </a>
+
+        <a href="#/">
+            <button class="btn btn-default">
+                <span class="glyphicon glyphicon-remove"></span><span>  Cancel</span>
+            </button>
+        </a>
+    </div>
+</div>

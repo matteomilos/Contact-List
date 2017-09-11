@@ -11,5 +11,9 @@ namespace ContactsHRC.Context
     {
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Tag> Tags { get; set; }
+
+        public DbSet<EmailAddress> EmailAddresses { get; set; }
+        public DbSet<PhoneNumber> PhoneNumbers { get; set; }
+
     }
 }

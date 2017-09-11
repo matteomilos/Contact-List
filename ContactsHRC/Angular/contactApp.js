@@ -4,8 +4,12 @@ contactApp.config(function ($routeProvider, $locationProvider) {
     $locationProvider.hashPrefix('');
     $routeProvider
         .when('/list', {
-            templateUrl: 'Scripts/Angular/contactList.html',
-            controller: 'listController',
+            templateUrl: 'Angular/contactList.html',
+            controller: 'listController'
+        })
+        .when('/edit/:id', {
+            templateUrl: 'Angular/editView.html',
+            controller: 'editController'
         })
 
         .otherwise({

@@ -13,8 +13,8 @@ namespace ContactsHRC.Models
         public string LastName { get; set; }
         public string Address { get; set; }
 
-        public List<EmailAddress> EmailAddresses { get; set; }
-        public List<PhoneNumber> PhoneNumbers { get; set; }
+        public virtual List<EmailAddress> EmailAddresses { get; set; }
+        public virtual List<PhoneNumber> PhoneNumbers { get; set; }
 
         public virtual List<Tag> Tags { get; set; }
 
