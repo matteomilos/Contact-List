@@ -1,8 +1,7 @@
+using System.Data.Entity.Migrations;
+
 namespace ContactsHRC.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
     public partial class Initial : DbMigration
     {
         public override void Up()
@@ -14,7 +13,7 @@ namespace ContactsHRC.Migrations
                         ContactId = c.Int(nullable: false, identity: true),
                         FirstName = c.String(),
                         LastName = c.String(),
-                        Address = c.String(),
+                        Address = c.String()
                     })
                 .PrimaryKey(t => t.ContactId);
             
@@ -24,7 +23,7 @@ namespace ContactsHRC.Migrations
                     {
                         EmailAddressId = c.Int(nullable: false, identity: true),
                         EmailAddressValue = c.String(),
-                        Contact_ContactId = c.Int(),
+                        Contact_ContactId = c.Int()
                     })
                 .PrimaryKey(t => t.EmailAddressId)
                 .ForeignKey("dbo.Contacts", t => t.Contact_ContactId)
@@ -36,7 +35,7 @@ namespace ContactsHRC.Migrations
                     {
                         PhoneNumberId = c.Int(nullable: false, identity: true),
                         PhoneNumberValue = c.String(),
-                        Contact_ContactId = c.Int(),
+                        Contact_ContactId = c.Int()
                     })
                 .PrimaryKey(t => t.PhoneNumberId)
                 .ForeignKey("dbo.Contacts", t => t.Contact_ContactId)
@@ -47,7 +46,7 @@ namespace ContactsHRC.Migrations
                 c => new
                     {
                         TagId = c.Int(nullable: false, identity: true),
-                        TagName = c.String(),
+                        TagName = c.String()
                     })
                 .PrimaryKey(t => t.TagId);
             
@@ -56,7 +55,7 @@ namespace ContactsHRC.Migrations
                 c => new
                     {
                         Tag_TagId = c.Int(nullable: false),
-                        Contact_ContactId = c.Int(nullable: false),
+                        Contact_ContactId = c.Int(nullable: false)
                     })
                 .PrimaryKey(t => new { t.Tag_TagId, t.Contact_ContactId })
                 .ForeignKey("dbo.Tags", t => t.Tag_TagId, cascadeDelete: true)

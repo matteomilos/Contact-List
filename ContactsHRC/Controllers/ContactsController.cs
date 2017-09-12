@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ContactsHRC.Context;
@@ -50,11 +46,11 @@ namespace ContactsHRC.Controllers
                 return BadRequest();
             }
 
-            updatePhoneNumbers(contact);
+            UpdatePhoneNumbers(contact);
 
-            updateEmailAddresses(contact);
+            UpdateEmailAddresses(contact);
 
-            updateTags(contact);
+            UpdateTags(contact);
             //db.Entry(contact).State = EntityState.Modified;
 
             try
@@ -67,16 +63,13 @@ namespace ContactsHRC.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        private void updatePhoneNumbers(Contact contact)
+        private void UpdatePhoneNumbers(Contact contact)
         {
             var originalContact = db.Contacts.Where(c => c.ContactId == contact.ContactId).Include(c => c.PhoneNumbers).SingleOrDefault();
 
@@ -85,7 +78,7 @@ namespace ContactsHRC.Controllers
 
             foreach (var number in contact.PhoneNumbers)
             {
-                var originalNumber = originalContact.PhoneNumbers.Where(n => n.PhoneNumberId == number.PhoneNumberId && n.PhoneNumberId != 0).SingleOrDefault();
+                var originalNumber = originalContact.PhoneNumbers.SingleOrDefault(n => n.PhoneNumberId == number.PhoneNumberId && n.PhoneNumberId != 0);
 
 
                 if (originalNumber != null)
@@ -102,14 +95,14 @@ namespace ContactsHRC.Controllers
 
             foreach (var originalNumber in originalContact.PhoneNumbers.Where(n => n.PhoneNumberId != 0).ToList())
             {
-                if (!contact.PhoneNumbers.Any(n => n.PhoneNumberId == originalNumber.PhoneNumberId))
+                if (contact.PhoneNumbers.All(n => n.PhoneNumberId != originalNumber.PhoneNumberId))
                 {
                     db.PhoneNumbers.Remove(originalNumber);
                 }
             }
         }
 
-        private void updateEmailAddresses(Contact contact)
+        private void UpdateEmailAddresses(Contact contact)
         {
             var originalContact = db.Contacts.Where(c => c.ContactId == contact.ContactId).Include(c => c.EmailAddresses).SingleOrDefault();
 
@@ -118,7 +111,7 @@ namespace ContactsHRC.Controllers
 
             foreach (var number in contact.EmailAddresses)
             {
-                var originalNumber = originalContact.EmailAddresses.Where(n => n.EmailAddressId == number.EmailAddressId && n.EmailAddressId != 0).SingleOrDefault();
+                var originalNumber = originalContact.EmailAddresses.SingleOrDefault(n => n.EmailAddressId == number.EmailAddressId && n.EmailAddressId != 0);
 
 
                 if (originalNumber != null)
@@ -135,14 +128,14 @@ namespace ContactsHRC.Controllers
 
             foreach (var originalNumber in originalContact.EmailAddresses.Where(n => n.EmailAddressId != 0).ToList())
             {
-                if (!contact.EmailAddresses.Any(n => n.EmailAddressId == originalNumber.EmailAddressId))
+                if (contact.EmailAddresses.All(n => n.EmailAddressId != originalNumber.EmailAddressId))
                 {
                     db.EmailAddresses.Remove(originalNumber);
                 }
             }
         }
 
-        private void updateTags(Contact contact)
+        private void UpdateTags(Contact contact)
         {
             var originalContact = db.Contacts.Where(c => c.ContactId == contact.ContactId).Include(c => c.Tags).SingleOrDefault();
 
@@ -151,7 +144,7 @@ namespace ContactsHRC.Controllers
 
             foreach (var number in contact.Tags)
             {
-                var originalNumber = originalContact.Tags.Where(n => n.TagId == number.TagId && n.TagId != 0).SingleOrDefault();
+                var originalNumber = originalContact.Tags.SingleOrDefault(n => n.TagId == number.TagId && n.TagId != 0);
 
 
                 if (originalNumber != null)
@@ -168,7 +161,7 @@ namespace ContactsHRC.Controllers
 
             foreach (var originalNumber in originalContact.Tags.Where(n => n.TagId != 0).ToList())
             {
-                if (!contact.Tags.Any(n => n.TagId == originalNumber.TagId))
+                if (contact.Tags.All(n => n.TagId != originalNumber.TagId))
                 {
                     db.Tags.Remove(originalNumber);
                 }
@@ -184,6 +177,7 @@ namespace ContactsHRC.Controllers
                 return BadRequest(ModelState);
             }
 
+
             db.Contacts.Add(contact);
             db.SaveChanges();
 
@@ -194,11 +188,12 @@ namespace ContactsHRC.Controllers
         [ResponseType(typeof(Contact))]
         public IHttpActionResult DeleteContact(int id)
         {
-            Contact contact = db.Contacts.Find(id);
-            if (contact == null)
-            {
-                return NotFound();
-            }
+
+            var contact = db.Contacts.FirstOrDefault(c => c.ContactId == id);
+
+            db.EmailAddresses.RemoveRange(contact.EmailAddresses);
+            db.PhoneNumbers.RemoveRange(contact.PhoneNumbers);
+            db.Tags.RemoveRange(contact.Tags);
 
             db.Contacts.Remove(contact);
             db.SaveChanges();

@@ -1,19 +1,22 @@
 ﻿(function () {
     angular
         .module("contactApp")
-        .controller("editController", function ($scope, $http, $routeParams, $window) {
-            var contactId = $routeParams.id | 0;
-            var apiUrl = "/api/Contacts/" + contactId;
-            if (contactId !== 0) {
-                $http.get(apiUrl).then(function (result) {
-                    $scope.currentContact = result.data;
-                });
+        .controller("createController", function ($scope, $http, $location) {
+            $scope.currentContact = {
+                ContactId: "",
+                FirstName: "",
+                LastName: "",
+                Address: "",
+                EmailAddresses: [],
+                PhoneNumbers: [],
+                Tags: []
             }
+            var contactId = 0;
 
 
 
             $scope.save = function () {
-                var contact = {
+                var Contact = {
                     ContactId: contactId,
                     FirstName: $scope.currentContact.FirstName,
                     LastName: $scope.currentContact.LastName,
@@ -23,7 +26,7 @@
                     Tags: $scope.currentContact.Tags
                 };
 
-                $http.put(apiUrl, contact).then($window.location.href = "#/list");
+                $http.post("api/Contacts", Contact).then($location.url("#/list"));
 
             }
 
