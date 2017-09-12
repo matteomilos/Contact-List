@@ -1,7 +1,7 @@
 ﻿(function () {
     angular
         .module("contactApp")
-        .controller("editController", function ($scope, $http, $routeParams, $window) {
+        .controller("editController", function ($scope, $http, $routeParams, $location) {
             var contactId = $routeParams.id | 0;
             var apiUrl = "/api/Contacts/" + contactId;
             if (contactId !== 0) {
@@ -23,7 +23,7 @@
                     Tags: $scope.currentContact.Tags
                 };
 
-                $http.put(apiUrl, contact).then($window.location.href = "#/list");
+                $http.put(apiUrl, contact).then($location.url(""));
 
             }
 

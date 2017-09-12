@@ -10,20 +10,51 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
 
-    <script src="~/Angular/contactApp.js"></script>
-    <script src="~/Angular/listController.js"></script>
-    <script src="~/Angular/editController.js"></script>
-    <script src="~/Angular/createController.js"></script>
+    <script src="~/AngularScripts/contactApp.js"></script>
+    <script src="~/AngularScripts/Controllers/listController.js"></script>
+    <script src="~/AngularScripts/Controllers/editController.js"></script>
+    <script src="~/AngularScripts/Controllers/createController.js"></script>
+    <script src="~/AngularScripts/Controllers/infoController.js"></script>
 
 </head>
 <body>
 
-<a ng-href="#/list">Home</a>
-    <a ng-href="#/newContact">Create new contact</a>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">WebSiteName</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li>
+                    <a ng-href="#/">Home</a>
+                </li>
+                <li>
+                    <a ng-href="#/newContact">Create new contact</a>
+                </li>            </ul>
+        </div>
+    </nav>
 
 
+    <div class="container" ng-controller="listController">
+        <div class="row">
+            <div class="col-xs-6">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <h4>Contacts:</h4>
+                        <input class="form-control" placeholder="Search Your Contacts" type="text" ng-model="searchText">
+                        <div class="list-group-item" ng-repeat="contact in contacts | orderBy: 'name' | filter: searchText ">
+                            <a ng-href="#/contactInfo/{{contact.ContactId}}">{{contact.FirstName}} {{contact.LastName}}</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-6">
+                <div ng-view> </div>
+            </div>
+        </div>
 
-    <div ng-view> </div>
+    </div>
+
 
     @RenderBody()
 

@@ -1,0 +1,38 @@
+﻿
+<div class="list-group-item">
+    <h3 class="text-center">{{currentContact.FirstName}} {{currentContact.LastName}}</h3>
+    <b>Address: </b><p style="text-indent: 20px">{{currentContact.Address}}</p>
+    <b>Phone numbers:</b>
+    <div ng-repeat="number in currentContact.PhoneNumbers" style="text-indent: 20px">{{number.PhoneNumberValue}}  </div>
+    <b>Email addresses:</b>
+    <div ng-repeat="email in currentContact.EmailAddresses" style="text-indent: 20px">{{email.EmailAddressValue}}  </div>
+    <b>Tags: </b>
+    <div ng-repeat="tag in currentContact.Tags" style="text-indent: 20px">#{{tag.TagName}}  </div>
+    <!--<p>email: <a ng-href="{{currentContact.email}}">{{currentContact.email}}</a></p>
+    <p>phone: {{currentContact.phone}}</p>
+    <p>url: <a ng-href="{{currentContact.url}}">{{currentContact.url}}</a></p>
+    <p>Notes:</p>
+    <p class="well well-lg">{{currentContact.notes}}</p>
+
+    <a ng-href="#/edit/{{contacts.indexOf(currentContact)}}">
+        <button class="btn btn-default">
+            <span class="glyphicon glyphicon-pencil"></span><span> - Edit</span>
+        </button>
+    </a>
+
+    <a href="#/"><button class="btn btn-default" ng-click="removeContact(currentContact)">
+        <span class="glyphicon glyphicon-remove"></span><span> - Remove</span>
+    </button></a>-->
+    <a ng-href="#/edit/{{currentContact.ContactId}}">
+        <button type="button" class="btn btn-default btn-sm" style="color: blue">
+            <span class="glyphicon glyphicon-pencil">Edit</span>
+        </button>
+    </a>
+    <a ng-click="delete(currentContact.ContactId)" href="javascript:;">
+        <button type="button" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-remove" style="color: red"></span> Delete
+        </button>
+    </a>
+</div>
+
+

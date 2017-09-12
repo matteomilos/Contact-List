@@ -174,18 +174,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Angular\createController.js" />
-    <Content Include="Angular\editController.js" />
-    <Content Include="Angular\editView.html" />
+    <Content Include="AngularScripts\Controllers\createController.js" />
+    <Content Include="AngularScripts\Controllers\editController.js" />
+    <Content Include="AngularScripts\Controllers\infoController.js" />
+    <Content Include="AngularScripts\Views\contactInfo.html" />
+    <Content Include="AngularScripts\Views\editView.html" />
+    <Content Include="AngularScripts\Views\newView.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Angular\contactApp.js" />
-    <Content Include="Angular\contactList.html" />
-    <Content Include="Angular\listController.js" />
+    <Content Include="AngularScripts\contactApp.js" />
+    <Content Include="AngularScripts\Views\contactList.html" />
+    <Content Include="AngularScripts\Controllers\listController.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
