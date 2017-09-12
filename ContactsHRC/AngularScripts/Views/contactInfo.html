@@ -1,24 +1,39 @@
 ﻿
 <div class="list-group-item">
     <h3 class="text-center">{{currentContact.FirstName}} {{currentContact.LastName}}</h3>
-    <b>Address: </b><p style="text-indent: 20px">{{currentContact.Address}}</p>
+    <b>Address: </b><p style="text-indent: 20px">{{currentContact.Address}}   <a ng-href="https://maps.google.com/?q={{currentContact.Address}}">Find on Google maps</a></p>
     <b>Phone numbers:</b>
-    <div ng-repeat="number in currentContact.PhoneNumbers" style="text-indent: 20px">{{number.PhoneNumberValue}}  </div>
+    <div ng-repeat="number in currentContact.PhoneNumbers" style="text-indent: 20px">{{number.PhoneNumberValue}}  </div><br/>
     <b>Email addresses:</b>
-    <div ng-repeat="email in currentContact.EmailAddresses" style="text-indent: 20px">{{email.EmailAddressValue}}  </div>
+    <div ng-repeat="email in currentContact.EmailAddresses" style="text-indent: 20px"><a ng-href="mailto:{{email.EmailAddressValue}}">{{email.EmailAddressValue}}</a>  </div><br/>
     <b>Tags: </b>
     <div ng-repeat="tag in currentContact.Tags" style="text-indent: 20px">#{{tag.TagName}}  </div>
+    <br /><br />
 
-    <a ng-href="#/edit/{{currentContact.ContactId}}">
-        <button type="button" class="btn btn-default btn-sm" style="color: blue">
-            <span class="glyphicon glyphicon-pencil">Edit</span>
-        </button>
-    </a>
-    <a ng-click="delete(currentContact.ContactId)" href="javascript:;">
-        <button type="button" class="btn btn-default btn-sm">
-            <span class="glyphicon glyphicon-remove" style="color: red"></span> Delete
-        </button>
-    </a>
+
+
+
+
+
+    <div class="container" ng-controller="listController">
+        <div class="row">
+            <div class="col-xs-3">
+                <a ng-href="#/edit/{{currentContact.ContactId}}">
+                    <button class="btn btn-default" >
+                        <span class="glyphicon glyphicon-pencil" style="color: blue"></span> Edit contact
+                    </button>
+                </a>
+            </div>
+            <div class="col-xs-3">
+                <a ng-click="delete(currentContact.ContactId)" href="javascript:;">
+                    <button class="btn btn-default">
+                        <span class="glyphicon glyphicon-remove" style="color: red"></span> Delete contact
+                    </button>
+                </a>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 

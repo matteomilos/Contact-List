@@ -29,16 +29,18 @@
         <ul class="list-group">
             <li class="list-group-item">
                 <h4>Contacts:</h4>
-                <input class="form-control" placeholder="Search Your Contacts" type="text" ng-model="searchText">
-                <div class="list-group-item" ng-repeat="contact in contacts | orderBy: 'name' | filter: searchText ">
+                <div class="row">
+                    <input class="form-control" placeholder="Search contacts by name or tag" type="text" ng-model="query">
+                </div>
+                <div class="list-group-item" ng-repeat="contact in contacts | orderBy: 'name' | filter: search ">
                     <a ng-href="#/contactInfo/{{contact.ContactId}}">{{contact.FirstName}} {{contact.LastName}}</a>
                 </div>
             </li>
         </ul>
     </div>
-    
 
-    
+
+
 
 </div>
 

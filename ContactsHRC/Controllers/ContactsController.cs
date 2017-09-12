@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -16,7 +17,27 @@ namespace ContactsHRC.Controllers
         // GET: api/Contacts
         public IQueryable<Contact> GetContacts()
         {
+
             return db.Contacts;
+        }
+
+        // GET: api/Contacts?filter="filt"
+        public IQueryable<Contact> GetFilteredContacts(String filter)
+        {
+            if (filter == ""|| filter == null)
+            {
+                System.Diagnostics.Debug.WriteLine("miljac");
+
+                return GetContacts();
+            }
+
+            filter = filter.ToUpper();
+            System.Diagnostics.Debug.WriteLine(filter);
+
+            return db.Contacts.Where(c =>
+                c.FirstName.ToUpper().Contains(filter) || c.LastName.ToUpper().Contains(filter) ||
+                c.Tags.Any(t => t.TagName.ToUpper().Contains(filter)));
+
         }
 
         // GET: api/Contacts/5
@@ -51,7 +72,7 @@ namespace ContactsHRC.Controllers
             UpdateEmailAddresses(contact);
 
             UpdateTags(contact);
-            //db.Entry(contact).State = EntityState.Modified;
+
 
             try
             {

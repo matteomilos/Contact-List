@@ -30,7 +30,8 @@
                 </li>
                 <li>
                     <a ng-href="#/newContact">Create new contact</a>
-                </li>            </ul>
+                </li>
+            </ul>
         </div>
     </nav>
 
@@ -41,11 +42,10 @@
                 <ul class="list-group">
                     <li class="list-group-item">
                         <h4>Contacts:</h4>
-                        <input class="form-control" placeholder="Search by first name" type="text" ng-model="search.FirstName">
-                        <input class="form-control" placeholder="Search by last name" type="text" ng-model="search.LastName">
-                        <input class="form-control" placeholder="Not working currently" type="text" ng-model="search.Tags">
-                        <div class="list-group-item" ng-repeat="contact in contacts | orderBy: 'name' | filter: search:strict ">
-                            <a ng-href="#/contactInfo/{{contact.ContactId}}">{{contact.FirstName}} {{contact.LastName}}</a>
+                        <input class="form-control" type="text" placeholder="Search by first or last name, or tags" ng-model="searched" />
+                        <div class="list-group-item" ng-repeat="contact in contacts | orderBy: 'name'">
+                            <a ng-href="#/contactInfo/{{contact.ContactId}}">{{contact.FirstName}} {{contact.LastName}}</a><br /><b>Tags:</b>
+                            <span ng-repeat="tag in contact.Tags">#{{tag.TagName}}  </span>
                         </div>
                     </li>
                 </ul>

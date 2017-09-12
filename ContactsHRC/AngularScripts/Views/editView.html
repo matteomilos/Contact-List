@@ -41,7 +41,7 @@
             </p>
             <p>
                 Tags: <div ng-repeat="(key, tag) in currentContact.Tags">
-                    <button>#{{tag.TagName}}</button> <a ng-click="deleteTag(key)">
+                          <input ng-model="tag.TagName"><a ng-click="deleteTag(key)">
                         <button type="button" class="btn btn-default btn-sm" style="background: red; color: white">
                             <span class="glyphicon glyphicon-remove"></span> Remove
                         </button>
