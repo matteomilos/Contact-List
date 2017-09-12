@@ -43,7 +43,7 @@
                     <li class="list-group-item">
                         <h4>Contacts:</h4>
                         <input class="form-control" type="text" placeholder="Search by first or last name, or tags" ng-model="searched" />
-                        <div class="list-group-item" ng-repeat="contact in contacts | orderBy: 'name'">
+                        <div class="list-group-item" ng-repeat="contact in contacts">
                             <a ng-href="#/contactInfo/{{contact.ContactId}}">{{contact.FirstName}} {{contact.LastName}}</a><br /><b>Tags:</b>
                             <span ng-repeat="tag in contact.Tags">#{{tag.TagName}}  </span>
                         </div>

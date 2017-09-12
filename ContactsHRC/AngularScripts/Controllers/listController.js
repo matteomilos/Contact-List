@@ -16,7 +16,11 @@
                 });
 
             $scope.delete = function (id) {
-                $http.delete("api/Contacts/" + id).then($location.path(""));
+                var index = $scope.contacts.indexOf(id);
+                $http.delete("api/Contacts/" + id).then(function() {
+                    $scope.contacts.splice(index, 1);
+                    $location.url("");
+                });
             }
 
 

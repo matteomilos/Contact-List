@@ -12,29 +12,26 @@ namespace ContactsHRC.Controllers
 {
     public class ContactsController : ApiController
     {
-        private ContactsContext db = new ContactsContext();
+        private ContactsContext _context = new ContactsContext();
 
         // GET: api/Contacts
         public IQueryable<Contact> GetContacts()
         {
 
-            return db.Contacts;
+            return _context.Contacts;
         }
 
         // GET: api/Contacts?filter="filt"
         public IQueryable<Contact> GetFilteredContacts(String filter)
         {
-            if (filter == ""|| filter == null)
+            if (string.IsNullOrEmpty(filter))
             {
-                System.Diagnostics.Debug.WriteLine("miljac");
-
                 return GetContacts();
             }
 
             filter = filter.ToUpper();
-            System.Diagnostics.Debug.WriteLine(filter);
 
-            return db.Contacts.Where(c =>
+            return _context.Contacts.Where(c =>
                 c.FirstName.ToUpper().Contains(filter) || c.LastName.ToUpper().Contains(filter) ||
                 c.Tags.Any(t => t.TagName.ToUpper().Contains(filter)));
 
@@ -44,7 +41,7 @@ namespace ContactsHRC.Controllers
         [ResponseType(typeof(Contact))]
         public IHttpActionResult GetContact(int id)
         {
-            Contact contact = db.Contacts.Find(id);
+            Contact contact = _context.Contacts.Find(id);
             if (contact == null)
             {
                 return NotFound();
@@ -76,7 +73,7 @@ namespace ContactsHRC.Controllers
 
             try
             {
-                db.SaveChanges();
+                _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -90,11 +87,61 @@ namespace ContactsHRC.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+
+
+        // POST: api/Contacts
+        [ResponseType(typeof(Contact))]
+        public IHttpActionResult PostContact(Contact contact)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+
+            _context.Contacts.Add(contact);
+            _context.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = contact.ContactId }, contact);
+        }
+
+        // DELETE: api/Contacts/5
+        [ResponseType(typeof(Contact))]
+        public IHttpActionResult DeleteContact(int id)
+        {
+
+            var contact = _context.Contacts.FirstOrDefault(c => c.ContactId == id);
+
+            _context.EmailAddresses.RemoveRange(contact.EmailAddresses);
+            _context.PhoneNumbers.RemoveRange(contact.PhoneNumbers);
+            _context.Tags.RemoveRange(contact.Tags);
+
+            _context.Contacts.Remove(contact);
+            _context.SaveChanges();
+
+            return Ok(contact);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool ContactExists(int id)
+        {
+            return _context.Contacts.Count(e => e.ContactId == id) > 0;
+        }
+
+
         private void UpdatePhoneNumbers(Contact contact)
         {
-            var originalContact = db.Contacts.Where(c => c.ContactId == contact.ContactId).Include(c => c.PhoneNumbers).SingleOrDefault();
+            var originalContact = _context.Contacts.Where(c => c.ContactId == contact.ContactId).Include(c => c.PhoneNumbers).SingleOrDefault();
 
-            var contactEntry = db.Entry(originalContact);
+            var contactEntry = _context.Entry(originalContact);
             contactEntry.CurrentValues.SetValues(contact);
 
             foreach (var number in contact.PhoneNumbers)
@@ -104,7 +151,7 @@ namespace ContactsHRC.Controllers
 
                 if (originalNumber != null)
                 {
-                    var numberEntry = db.Entry(originalNumber);
+                    var numberEntry = _context.Entry(originalNumber);
                     numberEntry.CurrentValues.SetValues(number);
                 }
                 else
@@ -118,122 +165,75 @@ namespace ContactsHRC.Controllers
             {
                 if (contact.PhoneNumbers.All(n => n.PhoneNumberId != originalNumber.PhoneNumberId))
                 {
-                    db.PhoneNumbers.Remove(originalNumber);
+                    _context.PhoneNumbers.Remove(originalNumber);
                 }
             }
         }
 
         private void UpdateEmailAddresses(Contact contact)
         {
-            var originalContact = db.Contacts.Where(c => c.ContactId == contact.ContactId).Include(c => c.EmailAddresses).SingleOrDefault();
+            var originalContact = _context.Contacts.Where(c => c.ContactId == contact.ContactId).Include(c => c.EmailAddresses).SingleOrDefault();
 
-            var contactEntry = db.Entry(originalContact);
+            var contactEntry = _context.Entry(originalContact);
             contactEntry.CurrentValues.SetValues(contact);
 
-            foreach (var number in contact.EmailAddresses)
+            foreach (var emailAddress in contact.EmailAddresses)
             {
-                var originalNumber = originalContact.EmailAddresses.SingleOrDefault(n => n.EmailAddressId == number.EmailAddressId && n.EmailAddressId != 0);
+                var originalEmail = originalContact.EmailAddresses.SingleOrDefault(n => n.EmailAddressId == emailAddress.EmailAddressId && n.EmailAddressId != 0);
 
 
-                if (originalNumber != null)
+                if (originalEmail != null)
                 {
-                    var numberEntry = db.Entry(originalNumber);
-                    numberEntry.CurrentValues.SetValues(number);
+                    var emailEntry = _context.Entry(originalEmail);
+                    emailEntry.CurrentValues.SetValues(emailAddress);
                 }
                 else
                 {
-                    number.EmailAddressId = 0;
-                    originalContact.EmailAddresses.Add(number);
+                    emailAddress.EmailAddressId = 0;
+                    originalContact.EmailAddresses.Add(emailAddress);
                 }
             }
 
-            foreach (var originalNumber in originalContact.EmailAddresses.Where(n => n.EmailAddressId != 0).ToList())
+            foreach (var originalEmail in originalContact.EmailAddresses.Where(n => n.EmailAddressId != 0).ToList())
             {
-                if (contact.EmailAddresses.All(n => n.EmailAddressId != originalNumber.EmailAddressId))
+                if (contact.EmailAddresses.All(n => n.EmailAddressId != originalEmail.EmailAddressId))
                 {
-                    db.EmailAddresses.Remove(originalNumber);
+                    _context.EmailAddresses.Remove(originalEmail);
                 }
             }
         }
 
         private void UpdateTags(Contact contact)
         {
-            var originalContact = db.Contacts.Where(c => c.ContactId == contact.ContactId).Include(c => c.Tags).SingleOrDefault();
+            var originalContact = _context.Contacts.Where(c => c.ContactId == contact.ContactId).Include(c => c.Tags).SingleOrDefault();
 
-            var contactEntry = db.Entry(originalContact);
+            var contactEntry = _context.Entry(originalContact);
             contactEntry.CurrentValues.SetValues(contact);
 
-            foreach (var number in contact.Tags)
+            foreach (var tag in contact.Tags)
             {
-                var originalNumber = originalContact.Tags.SingleOrDefault(n => n.TagId == number.TagId && n.TagId != 0);
+                var originalTag = originalContact.Tags.SingleOrDefault(n => n.TagId == tag.TagId && n.TagId != 0);
 
 
-                if (originalNumber != null)
+                if (originalTag != null)
                 {
-                    var numberEntry = db.Entry(originalNumber);
-                    numberEntry.CurrentValues.SetValues(number);
+                    var tagEntry = _context.Entry(originalTag);
+                    tagEntry.CurrentValues.SetValues(tag);
                 }
                 else
                 {
-                    number.TagId = 0;
-                    originalContact.Tags.Add(number);
+                    tag.TagId = 0;
+                    originalContact.Tags.Add(tag);
                 }
             }
 
-            foreach (var originalNumber in originalContact.Tags.Where(n => n.TagId != 0).ToList())
+            foreach (var originalTag in originalContact.Tags.Where(n => n.TagId != 0).ToList())
             {
-                if (contact.Tags.All(n => n.TagId != originalNumber.TagId))
+                if (contact.Tags.All(n => n.TagId != originalTag.TagId))
                 {
-                    db.Tags.Remove(originalNumber);
+                    _context.Tags.Remove(originalTag);
                 }
             }
-        }
-
-        // POST: api/Contacts
-        [ResponseType(typeof(Contact))]
-        public IHttpActionResult PostContact(Contact contact)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-
-            db.Contacts.Add(contact);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = contact.ContactId }, contact);
-        }
-
-        // DELETE: api/Contacts/5
-        [ResponseType(typeof(Contact))]
-        public IHttpActionResult DeleteContact(int id)
-        {
-
-            var contact = db.Contacts.FirstOrDefault(c => c.ContactId == id);
-
-            db.EmailAddresses.RemoveRange(contact.EmailAddresses);
-            db.PhoneNumbers.RemoveRange(contact.PhoneNumbers);
-            db.Tags.RemoveRange(contact.Tags);
-
-            db.Contacts.Remove(contact);
-            db.SaveChanges();
-
-            return Ok(contact);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool ContactExists(int id)
-        {
-            return db.Contacts.Count(e => e.ContactId == id) > 0;
         }
     }
 }
