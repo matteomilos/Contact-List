@@ -22,7 +22,7 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">WebSiteName</a>
+                <a class="navbar-brand" href="#">Contact list</a>
             </div>
             <ul class="nav navbar-nav">
                 <li>
@@ -41,8 +41,10 @@
                 <ul class="list-group">
                     <li class="list-group-item">
                         <h4>Contacts:</h4>
-                        <input class="form-control" placeholder="Search Your Contacts" type="text" ng-model="searchText">
-                        <div class="list-group-item" ng-repeat="contact in contacts | orderBy: 'name' | filter: searchText ">
+                        <input class="form-control" placeholder="Search by first name" type="text" ng-model="search.FirstName">
+                        <input class="form-control" placeholder="Search by last name" type="text" ng-model="search.LastName">
+                        <input class="form-control" placeholder="Not working currently" type="text" ng-model="search.Tags">
+                        <div class="list-group-item" ng-repeat="contact in contacts | orderBy: 'name' | filter: search:strict ">
                             <a ng-href="#/contactInfo/{{contact.ContactId}}">{{contact.FirstName}} {{contact.LastName}}</a>
                         </div>
                     </li>
