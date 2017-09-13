@@ -1,7 +1,7 @@
 ﻿(function () {
     angular
         .module("contactApp")
-        .controller("listController", function ($scope, $http, $location) {
+        .controller("listController", function ($scope, $http, $location, $rootScope) {
             $scope.searched = "";
             $scope.contacts = [];
 
@@ -16,7 +16,7 @@
                 });
 
             //ako je kontakt ažuriran, izbrisan ili dodan, lista sa strane se osvježi
-            $scope.$on("$routeChangeSuccess", function() {
+            $scope.$on("refresh", function(event) {
                 var apiUrl = "/api/Contacts?filter=" + $scope.searched;
                 $scope.contacts = [];
                 $http.get(apiUrl).then(function (result) {
@@ -25,9 +25,8 @@
             });
 
             $scope.delete = function (id) {
-                var index = $scope.contacts.indexOf(id);
                 $http.delete("api/Contacts/" + id).then(function() {
-                    $scope.contacts.splice(index, 1);
+                    $rootScope.$broadcast("refresh");
                     $location.url("");
                 });
             }

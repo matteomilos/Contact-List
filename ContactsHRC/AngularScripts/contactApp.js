@@ -13,7 +13,7 @@ contactApp.config(function ($routeProvider, $locationProvider) {
             controller: "editController"
         })
         .when("/newContact", {
-            templateUrl: "AngularScripts/Views/newView.html",
+            templateUrl: "AngularScripts/Views/editView.html",
             controller: "createController"
         })
         .when("/contactInfo/:id", {

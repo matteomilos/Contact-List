@@ -1,11 +1,11 @@
 ﻿
 <div class="list-group-item">
     <h3 class="text-center">{{currentContact.FirstName}} {{currentContact.LastName}}</h3>
-    <b>Address: </b><p style="text-indent: 20px">{{currentContact.Address}}   <a ng-href="https://maps.google.com/?q={{currentContact.Address}}">Find on Google maps</a></p>
+    <b>Address: </b><p style="text-indent: 20px">{{currentContact.Address}}   <a ng-href="https://maps.google.com/?q={{currentContact.Address}}">{{currentContact.Address ? "Find on google maps" : ""}}</a></p>
     <b>Phone numbers:</b>
-    <div ng-repeat="number in currentContact.PhoneNumbers" style="text-indent: 20px">{{number.PhoneNumberValue}}  </div><br/>
+    <div ng-repeat="number in currentContact.PhoneNumbers" style="text-indent: 20px">{{number.PhoneNumberValue}}  </div><br />
     <b>Email addresses:</b>
-    <div ng-repeat="email in currentContact.EmailAddresses" style="text-indent: 20px"><a ng-href="mailto:{{email.EmailAddressValue}}">{{email.EmailAddressValue}}</a>  </div><br/>
+    <div ng-repeat="email in currentContact.EmailAddresses" style="text-indent: 20px"><a ng-href="mailto:{{email.EmailAddressValue}}">{{email.EmailAddressValue}}</a>  </div><br />
     <b>Tags: </b>
     <div ng-repeat="tag in currentContact.Tags" style="text-indent: 20px">#{{tag.TagName}}  </div>
     <br /><br />
@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-xs-3">
                 <a ng-href="#/edit/{{currentContact.ContactId}}">
-                    <button class="btn btn-default" >
+                    <button class="btn btn-default">
                         <span class="glyphicon glyphicon-pencil" style="color: blue"></span> Edit contact
                     </button>
                 </a>

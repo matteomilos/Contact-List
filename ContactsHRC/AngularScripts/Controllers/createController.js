@@ -1,7 +1,7 @@
 ﻿(function () {
     angular
         .module("contactApp")
-        .controller("createController", function ($scope, $http, $location) {
+        .controller("createController", function ($scope, $http, $location, $rootScope) {
             $scope.currentContact = {
                 ContactId: "",
                 FirstName: "",
@@ -26,8 +26,10 @@
                     Tags: $scope.currentContact.Tags
                 };
 
-                $http.post("api/Contacts", Contact);
-
+                $http.post("api/Contacts", Contact).then(function () {
+                    $location.url("");
+                    $rootScope.$broadcast("refresh");
+                });
             }
 
             $scope.deleteNumber = function (index) {

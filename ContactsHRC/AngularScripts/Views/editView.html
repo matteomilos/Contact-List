@@ -1,82 +1,70 @@
-﻿
-<div class="list-group-item">
+﻿<div class="list-group-item">
 
     <div class="form-group">
+        <form name="myForm">
+            <p>First name: <input class="form-control" type="text" ng-model="currentContact.FirstName" placeholder="This field is required" required> </p>
+            <p>Last name: <input class="form-control" type="text" ng-model="currentContact.LastName" placeholder="This field is required" required> </p>
+            <p>Address: <input class="form-control" type="text" ng-model="currentContact.Address"> </p>
 
-        <p>First name: <input id="firstName" class="form-control" type="text" ng-model="currentContact.FirstName"> </p>
-        <p>Last name: <input id="lastName" class="form-control" type="text" ng-model="currentContact.LastName"> </p>
-        <p>Address: <input id="address" class="form-control" type="text" ng-model="currentContact.Address"> </p>
-        
-        
-        <p>
-            Numbers: <div ng-repeat="(key, number) in currentContact.PhoneNumbers">
-                <input ng-model="number.PhoneNumberValue"> <a ng-click="deleteNumber(key)">
-                    <button type="button" class="btn btn-default btn-sm" style="background: red; color: white">
+            <p>
+                Numbers: <div ng-repeat="(key, number) in currentContact.PhoneNumbers">
+                    <input ng-model="number.PhoneNumberValue" placeholder="This field is required" required>
+
+                    <button type="button" class="btn btn-default btn-sm" ng-click="deleteNumber(key)" style="background: red; color: white">
                         <span class="glyphicon glyphicon-remove"></span> Remove
                     </button>
-                </a>
-            </div>
+                </div>
 
-            <div>
-                <a ng-click="addPhoneNumber()">
-                    <button type="button" class="btn btn-default btn-sm" style="background: deepskyblue; color: white">
+                <div>
+                    <button type="button" class="btn btn-default btn-sm" ng-click="addPhoneNumber()" style="background: deepskyblue; color: white">
                         <span class="glyphicon glyphicon-plus"></span> Add phone number
                     </button>
-                </a>
-            </div>
-        </p>
+                </div>
+            </p>
 
-        <p>
-            Emails: <div ng-repeat="(key, email) in currentContact.EmailAddresses">
-                <input ng-model="email.EmailAddressValue"> <a ng-click="deleteEmail(key)">
-                    <button type="button" class="btn btn-default btn-sm" style="background: red; color: white">
+            <p>
+                Emails:
+                <div ng-repeat="(key, email) in currentContact.EmailAddresses">
+                    <input type="email" required ng-model="email.EmailAddressValue" placeholder="Valid email is required">
+
+                    <button type="button" class="btn btn-default btn-sm" ng-click="deleteEmail(key)" style="background: red; color: white">
                         <span class="glyphicon glyphicon-remove"></span> Remove
                     </button>
-                </a>
-            </div>
+                </div>
 
-            <div>
-                <a ng-click="addEmailAddress()">
-                    <button type="button" class="btn btn-default btn-sm" style="background: deepskyblue; color: white">
+                <div>
+                    <button type="button" class="btn btn-default btn-sm" ng-click="addEmailAddress()" style="background: deepskyblue; color: white">
                         <span class="glyphicon glyphicon-plus"></span> Add email address
                     </button>
-                </a>
-            </div>
+                </div>
+            </p>
 
-        </p>
+            <p>
+                Tags: <div ng-repeat="(key, tag) in currentContact.Tags">
+                    <input ng-model="tag.TagName" placeholder="This field is required" required>
 
-        <p>
-            Tags: <div ng-repeat="(key, tag) in currentContact.Tags">
-                <input ng-model="tag.TagName"><a ng-click="deleteTag(key)">
-                    <button type="button" class="btn btn-default btn-sm" style="background: red; color: white">
+                    <button type="button" class="btn btn-default btn-sm" style="background: red; color: white" ng-click="deleteTag(key)">
                         <span class="glyphicon glyphicon-remove"></span> Remove
                     </button>
-                </a>
-            </div>
+                </div>
 
-            <div>
-                <a ng-click="addTag()">
-                    <button type="button" class="btn btn-default btn-sm" style="background: deepskyblue; color: white">
+                <div>
+                    <button type="button" class="btn btn-default btn-sm" ng-click="addTag()" style="background: deepskyblue; color: white">
                         <span class="glyphicon glyphicon-plus"></span> Add tag
                     </button>
-                </a>
-            </div>
-
-        </p>
+                </div>
+            </p>
+        </form>
     </div>
 
 
 
-    <a ng-click="save()">
-        <button class="btn btn-default">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span> Save Edits</span>
-        </button>
-    </a>
+    <button class="btn btn-default" ng-disabled="myForm.$invalid" ng-click="save()">
+        <span class="glyphicon glyphicon-ok"></span>
+        <span> Save Edits</span>
+    </button>
 
-    <a href="#/">
-        <button class="btn btn-default">
-            <span class="glyphicon glyphicon-remove"></span><span>  Cancel</span>
-        </button>
+    <a href="#/" class="btn btn-default">
+        <span class="glyphicon glyphicon-remove"></span><span>  Cancel</span>
     </a>
 </div>

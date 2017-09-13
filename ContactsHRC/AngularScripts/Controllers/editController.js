@@ -1,7 +1,7 @@
 ﻿(function () {
     angular
         .module("contactApp")
-        .controller("editController", function ($scope, $http, $routeParams, $route, $location, MyService) {
+        .controller("editController", function ($scope, $http, $routeParams, $route, $location, $rootScope) {
 
             var contactId = $routeParams.id;
             var apiUrl = "/api/Contacts/" + contactId;
@@ -23,8 +23,8 @@
                 };
 
                 $http.put(apiUrl, contact).then(function () {
-                    $route.reload();
                     $location.url("");
+                    $rootScope.$broadcast("refresh");
                 });
             }
 
