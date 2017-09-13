@@ -3,7 +3,7 @@ Kako bi se dodali testni podaci u bazu podataka, potrebno je u "Package Manager 
 
 enable-migrations
 
-add-migration InitialCreate
+add-migration InitialCreate (prilikom ove naredbe mo¾da doðe do poruke: "Unable to generate an explicit migration because the following explicit migrations are pending...", u tom sluèaju treba je zanemariti i prijeæi na sljedeæu)
 
 update-database
 
