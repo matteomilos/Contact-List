@@ -112,6 +112,7 @@ namespace ContactsHRC.Controllers
             }
 
 
+
             _context.Contacts.Add(contact);
             _context.SaveChanges();
 
@@ -125,6 +126,18 @@ namespace ContactsHRC.Controllers
 
             var contact = _context.Contacts.FirstOrDefault(c => c.ContactId == id);
 
+            _context.PhoneNumbers.RemoveRange(contact.PhoneNumbers);
+            _context.EmailAddresses.RemoveRange(contact.EmailAddresses);
+
+            var tags = contact.Tags;
+
+            foreach (var tag in tags.ToList())
+            {
+                if (_context.Tags.Single(t => t.TagName == tag.TagName).Contacts.Count < 2)
+                {
+                    _context.Tags.Remove(tag);
+                }
+            }
 
             _context.Contacts.Remove(contact);
             _context.SaveChanges();

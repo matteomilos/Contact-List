@@ -8,7 +8,7 @@
 
             <p>
                 Numbers: <div ng-repeat="(key, number) in currentContact.PhoneNumbers">
-                    <input ng-model="number.PhoneNumberValue" placeholder="This field cannot be empty" required>
+                    <input  ng-model="number.PhoneNumberValue" placeholder="This field cannot be empty" required>
 
                     <button type="button" class="btn btn-default btn-sm" ng-click="deleteNumber(key)" style="background: red; color: white">
                         <span class="glyphicon glyphicon-remove"></span> Remove
@@ -54,17 +54,18 @@
                     </button>
                 </div>
             </p>
+            
+
+            <button class="btn btn-default" ng-disabled="myForm.$invalid" ng-click="save()">
+                <span class="glyphicon glyphicon-ok"></span>
+                <span> Save Edits</span>
+            </button>
+
+            <a href="#/" class="btn btn-default">
+                <span class="glyphicon glyphicon-remove"></span><span>  Cancel</span>
+            </a>
         </form>
     </div>
 
 
-
-    <button class="btn btn-default" ng-disabled="myForm.$invalid" ng-click="save()">
-        <span class="glyphicon glyphicon-ok"></span>
-        <span> Save Edits</span>
-    </button>
-
-    <a href="#/" class="btn btn-default">
-        <span class="glyphicon glyphicon-remove"></span><span>  Cancel</span>
-    </a>
 </div>
