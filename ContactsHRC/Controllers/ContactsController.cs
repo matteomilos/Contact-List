@@ -125,9 +125,6 @@ namespace ContactsHRC.Controllers
 
             var contact = _context.Contacts.FirstOrDefault(c => c.ContactId == id);
 
-            _context.EmailAddresses.RemoveRange(contact.EmailAddresses);
-            _context.PhoneNumbers.RemoveRange(contact.PhoneNumbers);
-            _context.Tags.RemoveRange(contact.Tags);
 
             _context.Contacts.Remove(contact);
             _context.SaveChanges();
