@@ -8,7 +8,7 @@
 
             <p>
                 Numbers: <div ng-repeat="(key, number) in currentContact.PhoneNumbers">
-                    <input ng-model="number.PhoneNumberValue" placeholder="This field is required" required>
+                    <input ng-model="number.PhoneNumberValue" placeholder="This field cannot be empty" required>
 
                     <button type="button" class="btn btn-default btn-sm" ng-click="deleteNumber(key)" style="background: red; color: white">
                         <span class="glyphicon glyphicon-remove"></span> Remove
@@ -41,7 +41,7 @@
 
             <p>
                 Tags: <div ng-repeat="(key, tag) in currentContact.Tags">
-                    <input ng-model="tag.TagName" placeholder="This field is required" required>
+                    <input ng-model="tag.TagName" placeholder="This field cannot be empty" required>
 
                     <button type="button" class="btn btn-default btn-sm" style="background: red; color: white" ng-click="deleteTag(key)">
                         <span class="glyphicon glyphicon-remove"></span> Remove
