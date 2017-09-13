@@ -26,10 +26,7 @@
                     Tags: $scope.currentContact.Tags
                 };
 
-                $http.post("api/Contacts", Contact).then(function() {
-                    $scope.contacts.push(Contact);
-                    $location.url("");
-                });
+                $http.post("api/Contacts", Contact);
 
             }
 

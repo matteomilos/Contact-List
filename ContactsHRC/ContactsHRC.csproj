@@ -189,7 +189,6 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="AngularScripts\contactApp.js" />
-    <Content Include="AngularScripts\Views\contactList.html" />
     <Content Include="AngularScripts\Controllers\listController.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

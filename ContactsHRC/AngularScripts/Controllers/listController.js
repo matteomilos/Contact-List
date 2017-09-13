@@ -15,6 +15,15 @@
                     });
                 });
 
+            //ako je kontakt ažuriran, izbrisan ili dodan, lista sa strane se osvježi
+            $scope.$on("$routeChangeSuccess", function() {
+                var apiUrl = "/api/Contacts?filter=" + $scope.searched;
+                $scope.contacts = [];
+                $http.get(apiUrl).then(function (result) {
+                    $scope.contacts = result.data;
+                });
+            });
+
             $scope.delete = function (id) {
                 var index = $scope.contacts.indexOf(id);
                 $http.delete("api/Contacts/" + id).then(function() {

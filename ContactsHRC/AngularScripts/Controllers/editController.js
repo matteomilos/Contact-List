@@ -1,15 +1,14 @@
 ﻿(function () {
     angular
         .module("contactApp")
-        .controller("editController", function ($scope, $http, $routeParams, $location) {
-            var contactId = $routeParams.id | 0;
-            var apiUrl = "/api/Contacts/" + contactId;
-            if (contactId !== 0) {
-                $http.get(apiUrl).then(function (result) {
-                    $scope.currentContact = result.data;
-                });
-            }
+        .controller("editController", function ($scope, $http, $routeParams, $route, $location, MyService) {
 
+            var contactId = $routeParams.id;
+            var apiUrl = "/api/Contacts/" + contactId;
+
+            $http.get(apiUrl).then(function (result) {
+                $scope.currentContact = result.data;
+            });
 
 
             $scope.save = function () {
@@ -23,8 +22,10 @@
                     Tags: $scope.currentContact.Tags
                 };
 
-                $http.put(apiUrl, contact).then($location.url(""));
-
+                $http.put(apiUrl, contact).then(function () {
+                    $route.reload();
+                    $location.url("");
+                });
             }
 
             $scope.deleteNumber = function (index) {
@@ -53,6 +54,7 @@
             $scope.deleteTag = function (index) {
                 $scope.currentContact.Tags.splice(index, 1);
             }
+
 
         });
 })();
