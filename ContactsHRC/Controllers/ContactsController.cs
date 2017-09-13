@@ -222,8 +222,18 @@ namespace ContactsHRC.Controllers
                 }
                 else
                 {
-                    tag.TagId = 0;
-                    originalContact.Tags.Add(tag);
+                    // check if that tagname already exists in db,
+                    if (_context.Tags.SingleOrDefault(t => t.TagName.Equals(tag.TagName)) != null)
+                    {
+                        // if it does, then just update tags list of contacts
+                        _context.Tags.SingleOrDefault(t => t.TagName.Equals(tag.TagName)).Contacts.Add(originalContact);
+                    }
+                    else
+                    {
+                        //otherwise, add tag to db
+                        tag.TagId = 0;
+                        originalContact.Tags.Add(tag);
+                    }
                 }
             }
 
@@ -231,7 +241,15 @@ namespace ContactsHRC.Controllers
             {
                 if (contact.Tags.All(n => n.TagId != originalTag.TagId))
                 {
-                    _context.Tags.Remove(originalTag);
+                    // check if there is multiple contacts assigned to this tag
+                    if (_context.Tags.Single(t => t.TagId == originalTag.TagId).Contacts.Count > 1)
+                    {
+                        originalContact.Tags.Remove(originalTag);
+                    }
+                    else
+                    {
+                        _context.Tags.Remove(originalTag);
+                    }
                 }
             }
         }
