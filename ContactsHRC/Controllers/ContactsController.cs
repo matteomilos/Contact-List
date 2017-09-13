@@ -98,6 +98,19 @@ namespace ContactsHRC.Controllers
                 return BadRequest(ModelState);
             }
 
+            var tags = contact.Tags;
+
+            foreach (var tag in tags.ToList())
+            {
+                var existingTag = _context.Tags.SingleOrDefault(t => t.TagName == tag.TagName);
+
+                if (existingTag != null)
+                {
+                    contact.Tags.Remove(tag);
+                    contact.Tags.Add(existingTag);
+                }
+            }
+
 
             _context.Contacts.Add(contact);
             _context.SaveChanges();
