@@ -13,7 +13,7 @@ Technologies used:
 * AngularJS on frontend
      
      
-     
+     <br><br>
      
 Few examples of app:
  
