@@ -6,10 +6,15 @@ Some features:
 * contact to phone numbers and email addresses - one to many relationship
 * contact to tags - many to many relationship
 
+
+
 Technologies used:
 * ASP.NET with Entity Framework on backend
 * AngularJS on frontend
-         
+     
+     
+     
+     
 Few examples of app:
  
 * List of all contacts
