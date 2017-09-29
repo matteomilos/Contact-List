@@ -1,10 +1,27 @@
-# Dodavanje testnih podataka pri prvom pokretanju #
-Kako bi se dodali testni podaci u bazu podataka, potrebno je u "Package Manager Console" redom pokrenuti naredbe:
+# Simple SPA implementing contact list #
+Some features:
+* creating, editing and deleting contacts
+* first name, last name, address and arbitrary number of phone numbers, email addresses and tags
+* search based on first name, last name, or tags
+* contact to phone numbers and email addresses - one to many relationship
+* contact to tags - many to many relationship
+         
+Few examples of app:
+ 
+* List of all contacts
+ ![alt text](https://image.ibb.co/gcdiBG/Screenshot_7.png)
 
-enable-migrations
+* Information about one contact
+![alt text](https://image.ibb.co/di13BG/Screenshot_1.png)
 
-add-migration InitialCreate (prilikom ove naredbe mozda dode do poruke: "Unable to generate an explicit migration because the following explicit migrations are pending...", u tom slucaju treba je zanemariti i prijeci na sljedecu)
+* Editing contact
+![alt text](https://image.ibb.co/eE41yw/Screenshot_2.png)
 
-update-database
-
-Nakon toga bit ce dodana dva kontakta u bazu podataka. Ukoliko se ne izvrse navedene naredbe, aplikacija ce i dalje uredno raditi te ce biti omoguceno dodavanje novih kontakata izravno u aplikaciji
+* Creating new contact
+![alt text](https://image.ibb.co/fZKqrG/Screenshot_3.png)
+ 
+* Search by last name
+![alt text](https://image.ibb.co/eACX5b/Screenshot_4.png)
+ 
+* Search by tag
+![alt text](https://image.ibb.co/kMM3BG/Screenshot_5.png)
