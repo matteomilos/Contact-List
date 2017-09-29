@@ -1,4 +1,5 @@
 # Simple SPA implementing contact list #
+<br>
 Some features:
 * creating, editing and deleting contacts
 * first name, last name, address and arbitrary number of phone numbers, email addresses and tags
@@ -6,7 +7,7 @@ Some features:
 * contact to phone numbers and email addresses - one to many relationship
 * contact to tags - many to many relationship
 
-
+<br><br>
 
 Technologies used:
 * ASP.NET with Entity Framework on backend
