@@ -1,5 +1,7 @@
 # Simple SPA implementing contact list #
+
 <br>
+
 Some features:
 * creating, editing and deleting contacts
 * first name, last name, address and arbitrary number of phone numbers, email addresses and tags
